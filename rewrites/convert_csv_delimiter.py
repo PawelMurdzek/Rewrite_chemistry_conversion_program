@@ -55,8 +55,12 @@ def convert_csv_files():
             # Replace commas with semicolons
             modified_lines = [line.replace(',', ';') for line in raw_lines]
             
-            # Write back to file
-            with open(filename, 'w', encoding='utf-8-sig') as file:
+            # Create new filename with _converted suffix
+            base_name = os.path.splitext(filename)[0]
+            new_filename = f"{base_name}_converted.csv"
+            
+            # Write to new file
+            with open(new_filename, 'w', encoding='utf-8-sig') as file:
                 file.writelines(modified_lines)
             
             processed_count += 1

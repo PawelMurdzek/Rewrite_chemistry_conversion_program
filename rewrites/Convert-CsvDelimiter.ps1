@@ -30,10 +30,15 @@ foreach ($filename in $files) {
             # Replace commas with semicolons
             $modifiedLines = $rawLines -replace ",", ";"
             
-            # Write back to the file
-            $modifiedLines | Set-Content -Path $filename -Encoding UTF8
+            # Create new filename with _converted suffix
+            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($filename)
+            $directory = [System.IO.Path]::GetDirectoryName($filename)
+            $newFilename = Join-Path $directory "$baseName`_converted.csv"
             
-            Write-Host "Przetworzono: $filename"
+            # Write to new file
+            $modifiedLines | Set-Content -Path $newFilename -Encoding UTF8
+            
+            Write-Host "Przetworzono: $filename -> $newFilename"
         }
         catch {
             Write-Host "Błąd podczas przetwarzania pliku: $filename" -ForegroundColor Red

@@ -44,8 +44,10 @@ if not exist "!filename!" (
 
 set /a fileCount+=1
 
-REM Create temporary file
-set "tempFile=!filename!.tmp"
+REM Create new filename with _converted suffix
+set "basename=%~n1"
+set "directory=%~dp1"
+set "newFilename=!directory!!basename!_converted.csv"
 
 REM Process the file line by line, replacing commas with semicolons
 (
@@ -54,18 +56,12 @@ REM Process the file line by line, replacing commas with semicolons
         set "line=!line:,=;!"
         echo !line!
     )
-) > "!tempFile!"
+) > "!newFilename!"
 
-REM Replace original file with modified content
-if exist "!tempFile!" (
-    move /y "!tempFile!" "!filename!" >nul
-    if !errorlevel! equ 0 (
-        echo [OK] Przetworzono: !filename!
-        set /a processedCount+=1
-    ) else (
-        echo [BŁĄD] Nie można zapisać pliku: !filename!
-        del "!tempFile!" 2>nul
-    )
+REM Check if new file was created successfully
+if exist "!newFilename!" (
+    echo [OK] Przetworzono: !filename! -^> !newFilename!
+    set /a processedCount+=1
 ) else (
     echo [BŁĄD] Nie można przetworzyć pliku: !filename!
 )
