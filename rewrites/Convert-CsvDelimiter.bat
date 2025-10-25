@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 >nul
 setlocal enabledelayedexpansion
 
 REM CSV Delimiter Converter - Converts comma-delimited CSV files to semicolon-delimited
