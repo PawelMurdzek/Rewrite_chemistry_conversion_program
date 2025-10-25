@@ -1,0 +1,6 @@
+# Requirements for CSV Delimiter Converter
+# No external dependencies needed - uses only Python standard library (tkinter)
+# tkinter comes pre-installed with Python on Windows
+
+# For building executable with PyInstaller:
+pyinstaller>=5.0
